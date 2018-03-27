@@ -25,7 +25,7 @@ class Dispatcher extends Zend_Controller_Dispatcher_Standard
 
     /**
      * @param \Illuminate\Contracts\Container\Container $container
-     * @param array                                     $params
+     * @param array $params
      */
     public function __construct(Container $container, $params = array())
     {
@@ -54,7 +54,7 @@ class Dispatcher extends Zend_Controller_Dispatcher_Standard
     }
 
     /**
-     * @param Zend_Controller_Request_Abstract  $request
+     * @param Zend_Controller_Request_Abstract $request
      * @param Zend_Controller_Response_Abstract $response
      *
      * @throws \Exception
@@ -178,10 +178,24 @@ class Dispatcher extends Zend_Controller_Dispatcher_Standard
         $this->loadClass($className);
         $moduleClassName = $this->getModuleClassName($className);
 
-        $controller = $this->getContainer()->make(
-            $moduleClassName,
-            array($request, $this->getResponse(), $this->getParams())
-        );
+        if (method_exists($this->getContainer(), 'makeWith')) {
+            // laravel 5.4+ removed arguments for "make" with params. New method "makeWith".
+            $controller = $this->getContainer()->makeWith(
+                $moduleClassName,
+                array(
+                    'request'    => $request,
+                    'response'   => $this->getResponse(),
+                    'invokeArgs' => $this->getParams(),
+                )
+            );
+        } else {
+            // laravel < 5.4
+            $controller = $this->getContainer()->make(
+                $moduleClassName,
+                array($request, $this->getResponse(), $this->getParams())
+            );
+        }
+
 
         $this->assertControllerIsValid($controller);
 
@@ -208,7 +222,7 @@ class Dispatcher extends Zend_Controller_Dispatcher_Standard
     /**
      * @param \Zend_Controller_Action $controller
      * @param                         $action
-     * @param array                   $params
+     * @param array $params
      */
     protected function call(Zend_Controller_Action $controller, $action, $params = array())
     {
