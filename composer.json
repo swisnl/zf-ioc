@@ -11,6 +11,7 @@
       "email": "jeroen@swis.nl"
     }
   ],
+  "license": "MIT",
   "require": {
     "illuminate/container": "^5.0",
     "php": ">=5.4.0"
