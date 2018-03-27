@@ -1,6 +1,6 @@
 <?php
 
-namespace Jeroenvandergeer\ZfIoc;
+namespace Swis\ZfIoc;
 
 use Illuminate\Contracts\Container\Container;
 use Zend_Controller_Action;

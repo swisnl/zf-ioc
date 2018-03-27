@@ -1,10 +1,14 @@
 {
-  "name": "jeroenvandergeer/zf-ioc",
+  "name": "swisnl/zf-ioc",
   "description": "Controller action dependency injection in Zend Framework 1 using Laravel's IoC container.",
   "authors": [
     {
+      "name": "Hendrik Nijmeijer",
+      "email": "hendrik@swis.nl"
+    },
+    {
       "name": "Jeroen van der Geer",
-      "email": "jeroen@vandergeer.eu"
+      "email": "jeroen@swis.nl"
     }
   ],
   "require": {
@@ -13,7 +17,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Jeroenvandergeer\\ZfIoc\\": "src/"
+      "Swis\\ZfIoc\\": "src/"
     }
   },
   "minimum-stability": "stable"
